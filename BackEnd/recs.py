@@ -1,5 +1,6 @@
 import pandas as pd
 from sample_data import grocery_df
+import numpy as np
 from google import generativeai as genai
 
 genai.configure(api_key="YOUR_API_KEY")
