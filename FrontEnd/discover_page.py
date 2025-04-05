@@ -1,4 +1,4 @@
-from sample_data import grocery_df
+from BackEnd.sample_data import grocery_df
 import customtkinter as ctk
 
 

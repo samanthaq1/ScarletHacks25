@@ -1,5 +1,6 @@
-import 
+import pandas as pd
 from BackEnd.sample_data import grocery_df
+
 
 # Hardcoded previous searches
 search_data = {"search_term": ["Milk", "Chicken", "Bananas"]}
