@@ -1,3 +1,5 @@
+from sample_data import grocery_df
+
 def search_food(food_name, grocery_df, sort_by=None):
     food_name_lower = food_name.lower()
     matching_items = grocery_df[grocery_df['Food'].str.lower().str.contains(food_name_lower)]
