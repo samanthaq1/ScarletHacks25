@@ -4,6 +4,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import customtkinter as ctk
 from BackEnd.sample_data import grocery_df 
+from BackEnd.map import distance
+
+user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location   
 
 class DiscoverPage(ctk.CTkFrame):
     def __init__(self, parent):
@@ -65,9 +68,12 @@ class DiscoverPage(ctk.CTkFrame):
             )
             btn.pack(pady=(5, 0), fill="x")
 
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
             label = ctk.CTkLabel(
                 card,
-                text=row["Location"],
+                text= location_text,
                 wraplength=140,
                 font=("Segoe UI", 10),
                 text_color="gray"
@@ -80,13 +86,16 @@ class DiscoverPage(ctk.CTkFrame):
 
         grouped = grocery_df .groupby(["Store", "Location"]).first().reset_index()
         for _, row in grouped.iterrows():
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
             card = ctk.CTkFrame(self.store_frame, width=150)
             card.pack(side="left", padx=10, pady=10)
 
             btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"]: self.show_store_dialog(s))
             btn.pack(pady=(5, 0), fill="x")
 
-            label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 10), text_color="gray")
+            label = ctk.CTkLabel(card, text=location_text, wraplength=140, font=("Segoe UI", 10), text_color="gray")
             label.pack(pady=(0, 10))
 
     

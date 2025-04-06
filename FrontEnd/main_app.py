@@ -15,7 +15,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("SellBuy")
-        self.geometry("600x900")
+        self.geometry("600x950")
 
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(fill="both", expand=True)

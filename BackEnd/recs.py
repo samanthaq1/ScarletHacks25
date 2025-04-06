@@ -1,10 +1,12 @@
-
+# import os
+# import sys
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pandas as pd
-from sample_data import grocery_df
+from .sample_data import grocery_df
 import numpy as np
 from google import generativeai as genai
 
-genai.configure(api_key="YOUR_API_KEY")
+genai.configure(api_key="")
 
 model = genai.GenerativeModel('gemini-1.5-flash-002')
 
@@ -37,13 +39,3 @@ if not matching_items.empty:
         recommendations = initial_recommendations[:3]
 else:
   recommendations = []
-
-# Print the recommendations
-for item in recommendations:
-    converted_item = {}
-    for key, value in item.items():
-        if isinstance(value, np.str_):
-            converted_item[key] = str(value)
-        else:
-            converted_item[key] = value
-    print(converted_item)

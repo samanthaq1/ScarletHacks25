@@ -55,9 +55,7 @@ def distance(userLocation, destination):
     # Extract distance and duration
     if data['status'] == 'OK':
         distance = data['rows'][0]['elements'][0]['distance']['text']
-        duration = data['rows'][0]['elements'][0]['duration']['text']
-        print(f"Distance: {distance}")
-        print(f"Duration: {duration}")
+        return distance
     else:
         print(f"Error: {data['status']}")
 
