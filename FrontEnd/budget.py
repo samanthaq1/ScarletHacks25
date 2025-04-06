@@ -5,7 +5,7 @@ import os
 from sample_data import data  # Import the data from sample_data.py
 
 # Configure your Gemini API key
-genai.configure(api_key="AIzaSyAjAILDTv3M41p64ywtAoX3wCYBAzQvEIc")
+genai.configure(api_key="")
 
 def create_meal_plan(location, budget, duration):
 
