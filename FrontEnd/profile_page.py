@@ -118,7 +118,7 @@ class ProfilePage(ctk.CTkFrame):
     def save_profile(self):
         # Replace entries with new label values
         self.username_value = ctk.CTkLabel(self.details_frame, text=self.username_entry.get())
-        self.username_value.grid(row=0, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.username_value.grid(row=0, column=2, padx=(10, 20), pady=(40,8), sticky="w")
         self.username_entry.destroy()
 
         self.email_value = ctk.CTkLabel(self.details_frame, text=self.email_entry.get())
