@@ -66,7 +66,7 @@ class ProfilePage(ctk.CTkFrame):
         # Location
         location_label = ctk.CTkLabel(self.details_frame, text="Location:", font=label_font)
         location_label.grid(row=3, column=1, padx=(20, 10), pady=8, sticky="w")
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=value_font)
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=value_font)
         self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
 
         # Edit Button (initial)

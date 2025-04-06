@@ -5,7 +5,7 @@ import pandas as pd
 from .sample_data import grocery_df
 import numpy as np
 from google import generativeai as genai
-from __init__ import model
+from .__init__ import model
 
 
 # Hardcoded previous searches
