@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 import pandas as pd
 from sample_data import grocery_df
 import numpy as np
@@ -7,10 +7,6 @@ from google import generativeai as genai
 genai.configure(api_key="YOUR_API_KEY")
 
 model = genai.GenerativeModel('gemini-1.5-flash-002')
-=======
-import 
-from FrontEnd.sample_data import grocery_df
->>>>>>> Stashed changes
 
 # Hardcoded previous searches
 search_data = {"search_term": ["Milk", "Chicken", "Bananas"]}
