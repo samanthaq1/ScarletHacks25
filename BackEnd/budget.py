@@ -8,9 +8,9 @@ import google.generativeai as genai
 import os
 from BackEnd.sample_data import grocery_df  # Import the data from sample_data.py
 from FrontEnd.browse_page import user_location
-
+from .__init__ import model
 # Configure your Gemini API key
-genai.configure(api_key="AIzaSyAjAILDTv3M41p64ywtAoX3wCYBAzQvEIc")
+
 
 def create_meal_plan(budget, duration):
 
@@ -37,6 +37,5 @@ def create_meal_plan(budget, duration):
     """
 
     # Generate the meal plan using Gemini API
-    model = genai.GenerativeModel('gemini-2.0-flash')
     response = model.generate_content(prompt)
     return response.text

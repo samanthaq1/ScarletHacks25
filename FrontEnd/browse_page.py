@@ -22,7 +22,7 @@ class BrowsePage(ctk.CTkFrame):
 
         # Intialize complex page elements
         self.create_search_bar()
-        self.create_dropmenu_radius()
+        # self.create_dropmenu_radius()
         self.create_store_list()
 
 
