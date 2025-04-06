@@ -19,5 +19,4 @@ def get_trending_items(df, top_n=3):
 
 # Example usage
 get_trending_items(grocery_df)
-#get_trending_items(grocery_df, top_n=5)
 get_trending_items(grocery_df.drop("Click Count", axis = 1))

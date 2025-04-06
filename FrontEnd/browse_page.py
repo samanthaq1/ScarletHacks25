@@ -1,4 +1,3 @@
-import pandas as pd
 import customtkinter as ctk
 from sample_data import grocery_df
 
