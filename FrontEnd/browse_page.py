@@ -8,7 +8,7 @@ import customtkinter as ctk
 from BackEnd.sample_data import grocery_df
 from PIL import Image
 
-
+user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location   
 class BrowsePage(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -139,7 +139,7 @@ class BrowsePage(ctk.CTkFrame):
 
     # Opening link
     def open_store_directions(self, store_address):
-        user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location   
+        
         link = get_link(user_location, store_address)
         webbrowser.open(link)
 
