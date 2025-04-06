@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
-import os
 from sample_data import data  # Import the data from sample_data.py
+
 
 # Configure your Gemini API key
 genai.configure(api_key="MY_API_KEY")

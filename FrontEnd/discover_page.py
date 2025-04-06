@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from . import grocery_df
-from . import searchArea
+from sample_data import grocery_df
+from maps import searchArea
 
 class DiscoverPage(ctk.CTkFrame):
     def __init__(self, parent):
