@@ -3,9 +3,10 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import customtkinter as ctk
-from BackEnd.recs import recommendations
-from BackEnd.trending import get_trending_items
 from BackEnd.sample_data import grocery_df 
+from BackEnd.map import distance
+
+user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location   
 
 class DiscoverPage(ctk.CTkFrame):
     def __init__(self, parent):
@@ -18,24 +19,26 @@ class DiscoverPage(ctk.CTkFrame):
         self.app_bar.grid(row=0, column=0, sticky="ew")
         self.app_bar.grid_columnconfigure(0, weight=1)
 
-        self.title_label = ctk.CTkLabel(self.app_bar, text="Discover Stores For You!", font=("Segoe UI", 20, "bold"), anchor="w", text_color="white")
+        self.title_label = ctk.CTkLabel(self.app_bar, text="Discover Stores Near You!", font=("Segoe UI", 20, "bold"), anchor="w", text_color="white")
         self.title_label.grid(row=0, column=0, pady=20, padx=10, sticky="w")
 
-        # Trending with Frame of Stores
+
         self.trending_label = ctk.CTkLabel(self, text="Trending Stores", font=("Segoe UI", 16, "bold"))
         self.trending_label.grid(row=1, column=0, pady=(10, 5))
 
         trending_scroll_frame = ctk.CTkScrollableFrame(self, orientation="horizontal")
-        trending_scroll_frame.grid(row=2, column=0, padx=10, pady=(0, 5), sticky="ew")
+        trending_scroll_frame.grid(row=2, column=0, padx=10, pady=(0, 10), sticky="ew")
         self.trending_frame = trending_scroll_frame
 
-        # Recommendations with Frame of Stores
         self.store_label = ctk.CTkLabel(self, text="Recommendations Based On Your History", font=("Segoe UI", 16, "bold"))
-        self.store_label.grid(row=4, column=0, pady=(10, 5))
+        self.store_label.grid(row=3, column=0, pady=(10, 5))
 
         store_scroll_frame = ctk.CTkScrollableFrame(self, orientation="horizontal")
-        store_scroll_frame.grid(row=5, column=0, padx=10, sticky="ew")
+        store_scroll_frame.grid(row=4, column=0, padx=10, sticky="ew")
         self.store_frame = store_scroll_frame
+
+        # Store button references
+        self.store_buttons = {}
 
         # Default load
         self.populate_trending_stores()
@@ -45,81 +48,82 @@ class DiscoverPage(ctk.CTkFrame):
         for widget in self.trending_frame.winfo_children():
             widget.destroy()
 
-        # Loads the top 5 stores based on click count
-        trending_data = get_trending_items(grocery_df)
+        # Get top 5 stores by click count
+        trending_data = (
+            grocery_df.groupby(["Store", "Location"])["Click Count"]
+            .sum()
+            .reset_index()
+            .sort_values(by="Click Count", ascending=False)
+            .head(5)
+        )
 
         for _, row in trending_data.iterrows():
             card = ctk.CTkFrame(self.trending_frame, width=150)
             card.pack(side="left", padx=10, pady=10)
 
-            store_button = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"], r=3: self.show_store_items(s, r))
-            store_button.pack(pady=(5, 0), fill="x")
+            btn = ctk.CTkButton(
+                card,
+                text=row["Store"],
+                command=lambda s=row["Store"]: self.show_store_dialog(s)
+            )
+            btn.pack(pady=(5, 0), fill="x")
 
-            label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 10), text_color="gray")
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
+            label = ctk.CTkLabel(
+                card,
+                text= location_text,
+                wraplength=140,
+                font=("Segoe UI", 10),
+                text_color="gray"
+            )
             label.pack(pady=(0, 10))
 
     def populate_rec_stores(self):
         for widget in self.store_frame.winfo_children():
             widget.destroy()
 
-        if not recommendations:
-            grouped = grocery_df.groupby(["Store", "Location"]).first().reset_index()
-        else:
-            rec_foods = [rec["Food"] for rec in recommendations]
-            rec_data = grocery_df[grocery_df["Food"].isin(rec_foods)]
-            grouped = rec_data.groupby(["Store", "Location"]).first().reset_index()
-
+        grouped = grocery_df .groupby(["Store", "Location"]).first().reset_index()
         for _, row in grouped.iterrows():
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
             card = ctk.CTkFrame(self.store_frame, width=150)
             card.pack(side="left", padx=10, pady=10)
 
-            btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"], r=6: self.show_store_items(s, r))
+            btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"]: self.show_store_dialog(s))
             btn.pack(pady=(5, 0), fill="x")
 
-            label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 10), text_color="gray")
+            label = ctk.CTkLabel(card, text=location_text, wraplength=140, font=("Segoe UI", 10), text_color="gray")
             label.pack(pady=(0, 10))
-    
-    def show_store_items(self, store_name, row_num):
-        # Remove existing info frame if present
-        if hasattr(self, "info_frame") and self.info_frame.winfo_exists():
-            self.info_frame.destroy()
 
+    
+    def show_store_dialog(self, store_name):
         items = grocery_df[grocery_df["Store"] == store_name]
 
         if items.empty:
+            ctk.CTkMessagebox(title="Info", message="No items available.")
             return
 
-        self.info_frame = ctk.CTkFrame(self)
-        self.info_frame.grid(row=row_num, column=0, padx=10, pady=10, sticky="ew")
-        self.info_frame.grid_columnconfigure(0, weight=1)
+        popup = ctk.CTkToplevel(self)
+        popup.title(f"{store_name} - Items")
+        popup.geometry("400x400")
+        popup.grid_columnconfigure(0, weight=1)
 
-        title = ctk.CTkLabel(self.info_frame, text=f"Items at {store_name}", font=("Segoe UI", 16, "bold"))
-        title.grid(row=0, column=0, pady=(10, 5), padx=10, sticky="w")
+        title = ctk.CTkLabel(popup, text=f"Items at {store_name}", font=("Segoe UI", 16, "bold"))
+        title.pack(pady=10)
 
-        close_button = ctk.CTkButton(self.info_frame, text="X", command=self.info_frame.destroy, fg_color="gray", width=20, height=20)
-        close_button.grid(row=0, column=1, pady=(10, 5), padx=10, sticky="e")
-
-        scroll_frame = ctk.CTkScrollableFrame(self.info_frame)
-        scroll_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=10, pady=(0, 10))
+        frame = ctk.CTkScrollableFrame(popup)
+        frame.pack(expand=True, fill="both", padx=10, pady=10)
 
         for _, row in items.iterrows():
-            availability = row['Availability']
-            color = "green" if availability.lower() == "available" else "red"
-
-            item_frame = ctk.CTkFrame(scroll_frame)
-            item_frame.pack(fill="x", padx=5, pady=5)
-
-            food_label = ctk.CTkLabel(item_frame, text=f"Food: {row['Food']}  ({availability})", font=("Segoe UI", 18, "bold"), text_color=color)
-            food_label.pack(anchor="w")
-
-            price_frame = ctk.CTkFrame(item_frame, fg_color="transparent")
-            price_frame.pack(anchor="w")
-            orig_price_label = ctk.CTkLabel(price_frame, text=f"Original: ${row['Original Price']:.2f} ", font=("Segoe UI", 15), text_color="gray")
-            orig_price_label.pack(side="left")
-            final_price_label = ctk.CTkLabel(price_frame, text=f"Now: ${row['Final Price']:.2f}", font=("Segoe UI", 15, "bold"), text_color=color)
-            final_price_label.pack(side="left")
-
-            exp_label = ctk.CTkLabel(item_frame, text=f"Expiration Date: {row['Expiration Date']}", font=("Segoe UI", 15), text_color=color)
-            exp_label.pack(anchor="w")
-
-
+            item_text = (
+                f"Food: {row['Food']}\n"
+                f"Original Price: ${row['Original Price']:.2f}\n"
+                f"Final Price: ${row['Final Price']:.2f}\n"
+                f"Expiration Date: {row['Expiration Date']}\n"
+                f"Availability: {row['Availability']}"
+            )
+            label = ctk.CTkLabel(frame, text=item_text, justify="left", anchor="w")
+            label.pack(anchor="w", pady=5)

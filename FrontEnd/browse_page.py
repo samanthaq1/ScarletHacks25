@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from BackEnd.map import get_link
+from BackEnd.map import get_link, distance
 import webbrowser
 import customtkinter as ctk
 from BackEnd.sample_data import grocery_df
@@ -121,12 +121,15 @@ class BrowsePage(ctk.CTkFrame):
         )
         close_button.pack(pady=(0, 10))
 
+        dist = distance(user_location, {location})
+        location_text = f"{location} ({dist})"
+
         # Prepare the details text
         available = store_df[store_df["Availability"] == "Available"]
         if available.empty:
-            text = f"🏬 {store}\n📍 {location}\n\n⚠️ No available food items."
+            text = f"🏬 {store}\n📍 {location_text}\n\n⚠️ No available food items."
         else:
-            text = f"🏬 {store}\n📍 {location}\n\n🛒 Available Items:\n"
+            text = f"🏬 {store}\n📍 {location_text}\n\n🛒 Available Items:\n"
             for _, row in available.iterrows():
                 text += f"• {row['Food']} - ${row['Final Price']:.2f} (exp: {row['Expiration Date']})\n"
 
