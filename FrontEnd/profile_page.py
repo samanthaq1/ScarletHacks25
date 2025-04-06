@@ -1,8 +1,5 @@
 import customtkinter as ctk
 
-ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue")
-
 class ProfilePage(ctk.CTkFrame):
     def __init__(self, parent, **kwargs):
         super().__init__(parent, **kwargs)
@@ -120,9 +117,9 @@ class ProfilePage(ctk.CTkFrame):
         self.edit_button.configure(text="Edit Profile")
         self.editing = False
 
-if __name__ == "__main__":
-    app = ctk.CTk()
-    app.geometry("600x400")
-    profile_page = ProfilePage(app)
-    profile_page.pack(fill="both", expand=True)
-    app.mainloop()
+# if __name__ == "__main__":
+#     app = ctk.CTk()
+#     app.geometry("600x400")
+#     profile_page = ProfilePage(app)
+#     profile_page.pack(fill="both", expand=True)
+#     app.mainloop()

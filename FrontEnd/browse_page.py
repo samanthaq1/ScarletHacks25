@@ -1,5 +1,9 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import customtkinter as ctk
-from sample_data import grocery_df
+from BackEnd.sample_data import grocery_df 
 
 class BrowsePage(ctk.CTkFrame):
     def __init__(self, parent):
