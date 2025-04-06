@@ -4,7 +4,7 @@ A Python application that helps users find partnering stores that sell food that
 
 ## Features
 
-- Search for grocery stores by product and location
+- Search for grocery stores by product
 - Display pricing, availability, and expiration date
 - Integrate Google Maps for store location visualization
 - Use Gemini AI for enhanced query interpretation
