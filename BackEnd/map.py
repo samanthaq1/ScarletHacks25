@@ -70,4 +70,4 @@ def get_link(userLocation, destination):
     # Generate the Google Maps directions link
     route_link = f"https://www.google.com/maps/dir/?api=1&origin={userLocation_encoded}&destination={destination_encoded}"
     
-    print("Google Maps Route Link:", route_link)
+    return route_link

@@ -1,11 +1,23 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from BackEnd.map import get_link
+import webbrowser
 import customtkinter as ctk
 from sample_data import grocery_df
+from PIL import Image
+
 
 class BrowsePage(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         label = ctk.CTkLabel(self, text="Browse Page", font=("Segoe UI", 20))
         label.pack(pady=(20, 10))
+
+        # Get full path to the image in the 'assets' folder and load into image to icon
+        icon_path = os.path.dirname(os.path.realpath(__file__))
+        self.store_icon = ctk.CTkImage(light_image=Image.open(icon_path + "/assets/destination.png"), size=(24, 24))
 
         self.create_search_bar()
         self.create_store_list()
@@ -55,13 +67,30 @@ class BrowsePage(ctk.CTkFrame):
         store_groups = df.groupby(["Store", "Location"])
 
         for (store, location), group in store_groups:
-            button = ctk.CTkButton(
-                self.scroll_frame,
+            row_frame = ctk.CTkFrame(self.scroll_frame, fg_color="transparent")
+            row_frame.pack(pady=5, padx=10, fill="x")
+
+            # Image button (icon only)
+            icon_button = ctk.CTkButton(
+                row_frame,
+                image=self.store_icon,
+                text="",
+                width=32,
+                height=32,
+                command=lambda addr=location: self.open_store_directions(addr)
+            )
+            icon_button.pack(side="left", padx=(0, 8))
+
+            # Store name button
+            store_button = ctk.CTkButton(
+                row_frame,
                 text=store,
                 width=200,
+                anchor="w",
                 command=lambda g=group, s=store, l=location: self.show_store_details(s, l, g)
             )
-            button.pack(pady=5, padx=10, anchor="w")
+            store_button.pack(side="left", fill="x", expand=True)
+
 
     def show_store_details(self, store, location, store_df):
         # Filter for available items only
@@ -78,6 +107,12 @@ class BrowsePage(ctk.CTkFrame):
     
     def clear_details(self):
         self.details_label.configure(text="")
+
+    # Opening link
+    def open_store_directions(self, store_address):
+        user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location   
+        link = get_link(user_location, store_address)
+        webbrowser.open(link)
 
     # Create searchbar
     def create_search_bar(self):
@@ -103,3 +138,10 @@ class BrowsePage(ctk.CTkFrame):
         ]
 
         self.show_store_buttons(filtered)
+
+if __name__ == "__main__":
+    app = ctk.CTk()
+    app.geometry("600x700")
+    browser= BrowsePage(app)
+    browser.pack(fill="both", expand=True)
+    app.mainloop()
