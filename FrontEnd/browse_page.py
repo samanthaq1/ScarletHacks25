@@ -25,8 +25,6 @@ class BrowsePage(ctk.CTkFrame):
         )
         title_label.pack(side="left")
 
-        # 
-
         # Get full path to the image in the 'assets' folder and load into image to icon
         icon_path = os.path.dirname(os.path.realpath(__file__))
         self.store_icon = ctk.CTkImage(light_image=Image.open(icon_path + "/assets/destination.png"), size=(24, 24))
@@ -85,8 +83,8 @@ class BrowsePage(ctk.CTkFrame):
                 width=32,
                 height=32,
                 corner_radius=16,
-                fg_color="#8AB2A6",
-                hover_color="#719087",
+                fg_color="#73a291",
+                hover_color="#84b9a5",
                 command=lambda addr=location: self.open_store_directions(addr)
             )
             icon_button.pack(side="left", padx=(0, 8))
@@ -121,6 +119,8 @@ class BrowsePage(ctk.CTkFrame):
             text="",
             justify="left",
             anchor="nw",
+            fg_color="#3E3F5B",
+            text_color="white",
             wraplength=320
         )
         label.pack(pady=(10, 10), padx=10, fill="both", expand=True)
@@ -129,7 +129,8 @@ class BrowsePage(ctk.CTkFrame):
         close_button = ctk.CTkButton(
             self.details_popup,
             text="Close",
-            color="#8AB2A6",
+            fg_color="#8AB2A6",
+            hover_color="#719087",
             command=self.close_popup  # Use close_popup to properly close
         )
         close_button.pack(pady=(0, 10))
@@ -160,7 +161,6 @@ class BrowsePage(ctk.CTkFrame):
 
     # Opening link to google map
     def open_store_directions(self, store_address):
-        
         link = get_link(user_location, store_address)
         webbrowser.open(link)
 
@@ -170,7 +170,11 @@ class BrowsePage(ctk.CTkFrame):
         self.search_entry.pack(pady=(10, 5), anchor="center")
 
         # Search button
-        search_button = ctk.CTkButton(self, text="Search", command=self.perform_search)
+        search_button = ctk.CTkButton(self, 
+            text="Search",
+            fg_color="#3E3F5B",
+            hover_color="#686993", 
+            command=self.perform_search)
         search_button.pack(pady=(5, 10))
 
         # Bind Enter key for mobile users
