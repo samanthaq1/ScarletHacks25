@@ -1,6 +1,4 @@
-from sample_data import grocery_df
-
-def get_trending_items(df, top_n=3):
+def get_trending_items(df, top_n=5):
     """
     Calculates and prints the top trending grocery items based on click counts, without index.
 
@@ -14,9 +12,4 @@ def get_trending_items(df, top_n=3):
         return
 
     trending_items = df.sort_values(by="Click Count", ascending=False).head(top_n)
-    print("Trending Items:")
-    print(trending_items.to_string(index=False))  # Print without index
-
-# Example usage
-get_trending_items(grocery_df)
-get_trending_items(grocery_df.drop("Click Count", axis = 1))
+    return trending_items

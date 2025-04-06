@@ -10,7 +10,7 @@ from BackEnd.sample_data import grocery_df  # Import the data from sample_data.p
 from FrontEnd.browse_page import user_location
 
 # Configure your Gemini API key
-genai.configure(api_key="AIzaSyAjAILDTv3M41p64ywtAoX3wCYBAzQvEIc")
+genai.configure(api_key="")
 
 def create_meal_plan(budget, duration):
 
@@ -41,10 +41,3 @@ def create_meal_plan(budget, duration):
     response = model.generate_content(prompt)
     return response.text
 
-# Example usage
-location = "Chicago, IL"
-budget = 50.00
-duration = 3
-
-meal_plan = create_meal_plan(budget, duration)
-print(meal_plan)
