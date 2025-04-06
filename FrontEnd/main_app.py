@@ -5,7 +5,7 @@ from PIL import Image
 import os
 
 ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("green")
 
 
 class App(ctk.CTk):
@@ -14,7 +14,7 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("SellBuy")
-        self.geometry("600x900")
+        self.geometry("600x700")
 
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(fill="both", expand=True)
