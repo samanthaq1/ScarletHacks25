@@ -9,7 +9,7 @@ from .__init__ import model
 
 
 # Hardcoded previous searches
-search_data = {"search_term": ["Milk", "Chicken", "Bananas"]}
+search_data = {"search_term": ["Milk", "Eggs", "Bananas", "Tomatoes"]}
 search_df = pd.DataFrame(search_data)
 
 # Recommendation logic

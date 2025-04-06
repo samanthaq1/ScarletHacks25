@@ -5,6 +5,7 @@ from profile_page import ProfilePage
 from PIL import Image
 import os
 from budget_page import BudgetPage
+
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("green")
 
@@ -23,7 +24,7 @@ class App(ctk.CTk):
         self.pages = {
             "discover": DiscoverPage(self.page_container),
             "browse": BrowsePage(self.page_container),
-            "budget": BudgetPage(self.page_container),
+            "planner": BudgetPage(self.page_container),
             "profile": ProfilePage(self.page_container),
         }
 
@@ -34,7 +35,7 @@ class App(ctk.CTk):
         self.icons = {
             "discover": ctk.CTkImage(Image.open(file_path + "/assets/discover.png"), size=(24, 24)),
             "browse": ctk.CTkImage(Image.open(file_path + "/assets/browse.png"), size=(24, 24)),
-            "budget": ctk.CTkImage(Image.open(file_path + "/assets/list.png"), size=(24, 24)),
+            "planner": ctk.CTkImage(Image.open(file_path + "/assets/list.png"), size=(24, 24)),
             "profile": ctk.CTkImage(Image.open(file_path + "/assets/user.png"), size=(24, 24)),
         }
 
@@ -47,12 +48,12 @@ class App(ctk.CTk):
         # Create nav buttons
         self.nav_buttons["discover"] = self.create_nav_button(nav_bar, "discover", lambda: self.show_page("discover"))
         self.nav_buttons["browse"] = self.create_nav_button(nav_bar, "browse", lambda: self.show_page("browse"))
-        self.nav_buttons["budget"] = self.create_nav_button(nav_bar, "budget", lambda: self.show_page("budget"))
+        self.nav_buttons["planner"] = self.create_nav_button(nav_bar, "planner", lambda: self.show_page("planner"))
         self.nav_buttons["profile"] = self.create_nav_button(nav_bar, "profile", lambda: self.show_page("profile"))
 
         self.nav_buttons["discover"].pack(side="left", expand=True, fill="both")
         self.nav_buttons["browse"].pack(side="left", expand=True, fill="both")
-        self.nav_buttons["budget"].pack(side="left", expand=True, fill="both")
+        self.nav_buttons["planner"].pack(side="left", expand=True, fill="both")
         self.nav_buttons["profile"].pack(side="left", expand=True, fill="both")
 
         self.active_page = None
