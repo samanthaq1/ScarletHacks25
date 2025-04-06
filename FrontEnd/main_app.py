@@ -1,11 +1,12 @@
 import customtkinter as ctk
 from discover_page import DiscoverPage
 from browse_page import BrowsePage
+from profile_page import ProfilePage
 from PIL import Image
 import os
 
-ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("green")
+ctk.set_appearance_mode("Light")
+ctk.set_default_color_theme("blue")
 
 
 class App(ctk.CTk):
@@ -21,8 +22,9 @@ class App(ctk.CTk):
 
         self.pages = {
             "discover": DiscoverPage(self.page_container),
-            "browse": BrowsePage(self.page_container)
-            "profile": ProfilePage(self.page_container)
+            "browse": BrowsePage(self.page_container),
+            # "budget": BudgetPage(self.page_container),
+            "profile": ProfilePage(self.page_container),
         }
 
         for page in self.pages.values():
