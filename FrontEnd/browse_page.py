@@ -14,23 +14,18 @@ class BrowsePage(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # Title
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=0)
-        self.grid_rowconfigure(1, weight=1)
+       # Title
+        self.title_bar = ctk.CTkFrame(self, fg_color="#3F7D58", corner_radius=0)  # give it a solid color
+        self.title_bar.pack(side="top", fill="x", padx=0, pady=(0, 10))  # no side padding for full width
 
-        # Title Label
-        label_font = ctk.CTkFont(family="Segoe UI", size=14)
-        header_font = ctk.CTkFont(family="Segoe UI", size=22, weight="bold")
-
-        # App Bar
-        self.app_bar = ctk.CTkFrame(self, corner_radius=0, fg_color="#3F7D58")
-        self.app_bar.grid(row=0, column=0, sticky="ew")
-        self.app_bar.grid_columnconfigure(0, weight=1)
-
-        title_label = ctk.CTkLabel(self.app_bar, text="Browse for Food in Stores", font=header_font, text_color="white")
-        title_label.grid(row=0, column=0, pady=20, padx=10, sticky="w")
-
+        title_label = ctk.CTkLabel(
+            self.title_bar,
+            text="Browse for Foods in Stores",
+            text_color="white",
+            font=("Segoe UI", 28, "bold"),
+            anchor="w"
+        )
+        title_label.pack(side="left")
 
         # Get full path to the image in the 'assets' folder and load into image to icon
         icon_path = os.path.dirname(os.path.realpath(__file__))
@@ -46,7 +41,8 @@ class BrowsePage(ctk.CTkFrame):
     def create_store_list(self):
         # Main frame to hold buttons and details side by side
         self.content_frame = ctk.CTkFrame(self)
-        self.content_frame.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
+        self.content_frame.pack(padx=20, pady=10, fill="both", expand=True)
+
 
 
         # Scrollable button list (on left)
@@ -170,7 +166,7 @@ class BrowsePage(ctk.CTkFrame):
     def create_search_bar(self):
         # Search bar
         self.search_entry = ctk.CTkEntry(self, placeholder_text="Search by food...", width=300)
-        self.search_entry.grid(row=1, column=0, pady=(10, 5), padx=10, sticky="n")
+        self.search_entry.pack(pady=(10, 5), anchor="center")
 
         # Search button
         search_button = ctk.CTkButton(self, 
@@ -178,7 +174,7 @@ class BrowsePage(ctk.CTkFrame):
             fg_color="#3E3F5B",
             hover_color="#686993", 
             command=self.perform_search)
-        search_button.grid(row=2, column=0, pady=(5, 10), padx=10, sticky="n")
+        search_button.pack(pady=(5, 10))
 
         # Bind Enter key for mobile users
         self.search_entry.bind("<Return>", lambda event: self.perform_search())

@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
-genai.configure(api_key="YOUR_API_KEY")
+genai.configure(api_key="AIzaSyBVIZqyNW8MyzL9nMT1TUblgSwO3OEIAn4")
 
 model = genai.GenerativeModel('gemini-2.0-flash')
 
-maps_key = "YOUR_MAP_KEY"
+maps_key = "AIzaSyACXlQZZN9uZcxQpSiInxTl__-3eGxq4m8"
