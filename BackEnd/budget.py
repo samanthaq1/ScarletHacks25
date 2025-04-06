@@ -10,7 +10,7 @@ from BackEnd.sample_data import grocery_df  # Import the data from sample_data.p
 from FrontEnd.browse_page import user_location
 
 # Configure your Gemini API key
-genai.configure(api_key="")
+genai.configure(api_key="AIzaSyAjAILDTv3M41p64ywtAoX3wCYBAzQvEIc")
 
 def create_meal_plan(budget, duration):
 

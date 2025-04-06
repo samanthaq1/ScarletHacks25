@@ -1,4 +1,6 @@
 import customtkinter as ctk
+import os
+from PIL import Image
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
@@ -12,9 +14,9 @@ class ProfilePage(ctk.CTkFrame):
         self.grid_rowconfigure(1, weight=1)  # Allow details to expand
 
         # === Fonts ===
-        label_font = ctk.CTkFont(family="Segoe UI", size=14, weight="bold")
-        header_font = ctk.CTkFont(family="Segoe UI", size=20, weight="bold")
-        value_font = ctk.CTkFont(size=14)
+        label_font = ctk.CTkFont(family="Segoe UI", size=24, weight="bold")
+        header_font = ctk.CTkFont(family="Segoe UI", size=30, weight="bold")
+        value_font = ctk.CTkFont(size=24)
 
         # === Header Frame ===
         header_frame = ctk.CTkFrame(self, corner_radius=12)
@@ -36,30 +38,36 @@ class ProfilePage(ctk.CTkFrame):
         self.details_frame.grid_columnconfigure(1, weight=0)
         self.details_frame.grid_columnconfigure(2, weight=1)
 
-        # Set a uniform width for all entries (input boxes)
-        input_width = 280  # Adjust this width value as needed for uniformity
+        icon_path = os.path.dirname(os.path.realpath(__file__))
+        try:
+            image = ctk.CTkImage(light_image=Image.open(icon_path + "/assets/user.png"), size=(150, 150))
+            self.user_image_label = ctk.CTkLabel(self.details_frame, image=image, text="")
+            self.user_image_label.grid(row=0, column=0, columnspan=3, pady=(100, 20))  # Increase pady below image
+        except FileNotFoundError:
+            self.user_image_label = ctk.CTkLabel(self.details_frame, text="User Image Not Found")
+            self.user_image_label.grid(row=0, column=0, columnspan=3, pady=(20, 20))
 
         # Username
         username_label = ctk.CTkLabel(self.details_frame, text="Username:", font=label_font)
-        username_label.grid(row=0, column=1, padx=(20, 10), pady=(40,8), sticky="w")  # Lowered label
-        self.username_value = ctk.CTkLabel(self.details_frame, text="User123", font=value_font)
-        self.username_value.grid(row=0, column=2, padx=(10, 20), pady=(40,8), sticky="w")
+        username_label.grid(row=1, column=1, padx=(20, 10), pady=(30, 8), sticky="w")
+        self.username_value = ctk.CTkLabel(self.details_frame, text="User123", font=ctk.CTkFont(size=24))
+        self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
 
         # Email
         email_label = ctk.CTkLabel(self.details_frame, text="Email:", font=label_font)
-        email_label.grid(row=1, column=1, padx=(20, 10), pady=8, sticky="w")  # Lowered label
+        email_label.grid(row=2, column=1, padx=(20, 10), pady=8, sticky="w")
         self.email_value = ctk.CTkLabel(self.details_frame, text="user123@example.com", font=value_font)
-        self.email_value.grid(row=1, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
 
         # Location
         location_label = ctk.CTkLabel(self.details_frame, text="Location:", font=label_font)
-        location_label.grid(row=2, column=1, padx=(20, 10), pady=8, sticky="w")  # Lowered label
+        location_label.grid(row=3, column=1, padx=(20, 10), pady=8, sticky="w")
         self.location_value = ctk.CTkLabel(self.details_frame, text="Chicago, IL", font=value_font)
-        self.location_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
 
         # Edit Button (initial)
-        self.edit_button = ctk.CTkButton(self.details_frame, text="Edit Profile", fg_color="#1E88E5", command=self.edit_profile)
-        self.edit_button.grid(row=3, column=0, columnspan=3, pady=(20, 10))
+        self.edit_button = ctk.CTkButton(self.details_frame, text="Edit Profile", fg_color="#1E88E5", command=self.edit_profile, width=150, height=40, font=ctk.CTkFont(size=24))
+        self.edit_button.grid(row=4, column=0, columnspan=3, pady=(20, 10))
 
         self.editing = False
 
@@ -72,43 +80,43 @@ class ProfilePage(ctk.CTkFrame):
             self.original_email = self.email_value.cget("text")
             self.original_location = self.location_value.cget("text")
 
-            # Replace labels with entries, and make them all the same width
-            self.username_entry = ctk.CTkEntry(self.details_frame, width=280)  # Uniform width
+            # Replace labels with entries, and make them all the same size
+            self.username_entry = ctk.CTkEntry(self.details_frame, width=280, font=ctk.CTkFont(size=24))  # Same width and font
             self.username_entry.insert(0, self.original_username)
-            self.username_entry.grid(row=0, column=2, padx=(10, 20), pady=(40,8), sticky="w")
+            self.username_entry.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
             self.username_value.destroy()
 
-            self.email_entry = ctk.CTkEntry(self.details_frame, width=280)  # Uniform width
+            self.email_entry = ctk.CTkEntry(self.details_frame, width=280, font=ctk.CTkFont(size=24))  # Same width and font
             self.email_entry.insert(0, self.original_email)
-            self.email_entry.grid(row=1, column=2, padx=(10, 20), pady=8, sticky="w")
+            self.email_entry.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
             self.email_value.destroy()
 
-            self.location_entry = ctk.CTkEntry(self.details_frame, width=280)  # Uniform width
+            self.location_entry = ctk.CTkEntry(self.details_frame, width=280, font=ctk.CTkFont(size=24))  # Same width and font
             self.location_entry.insert(0, self.original_location)
-            self.location_entry.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
+            self.location_entry.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
             self.location_value.destroy()
 
             # Save Button
-            self.save_button = ctk.CTkButton(self.details_frame, text="Save", fg_color="#43A047", command=self.save_profile)
-            self.save_button.grid(row=4, column=0, columnspan=3, pady=(10, 5))
+            self.save_button = ctk.CTkButton(self.details_frame, text="Save", fg_color="#43A047", command=self.save_profile, width=150, height=40, font=ctk.CTkFont(size=24))
+            self.save_button.grid(row=5, column=0, columnspan=3, pady=(10, 5))
 
-            self.edit_button.configure(text="Cancel Edit")
+            self.edit_button.configure(text="Cancel Edit", width=150, height=40, font=ctk.CTkFont(size=24))
 
         else:
             self.cancel_edit()
 
     def cancel_edit(self):
         # Restore original label values
-        self.username_value = ctk.CTkLabel(self.details_frame, text=self.original_username)
-        self.username_value.grid(row=0, column=2, padx=(10, 20), pady=(40,8), sticky="w")
+        self.username_value = ctk.CTkLabel(self.details_frame, text=self.original_username, font=ctk.CTkFont(size=24))
+        self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
         self.username_entry.destroy()
 
-        self.email_value = ctk.CTkLabel(self.details_frame, text=self.original_email)
-        self.email_value.grid(row=1, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.email_value = ctk.CTkLabel(self.details_frame, text=self.original_email, font=ctk.CTkFont(size=24))
+        self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
         self.email_entry.destroy()
 
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.original_location)
-        self.location_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.original_location, font=ctk.CTkFont(size=24))
+        self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
         self.location_entry.destroy()
 
         self.save_button.destroy()
@@ -117,16 +125,16 @@ class ProfilePage(ctk.CTkFrame):
 
     def save_profile(self):
         # Replace entries with new label values
-        self.username_value = ctk.CTkLabel(self.details_frame, text=self.username_entry.get())
-        self.username_value.grid(row=0, column=2, padx=(10, 20), pady=(40,8), sticky="w")
+        self.username_value = ctk.CTkLabel(self.details_frame, text=self.username_entry.get(), font=ctk.CTkFont(size=24))
+        self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
         self.username_entry.destroy()
 
-        self.email_value = ctk.CTkLabel(self.details_frame, text=self.email_entry.get())
-        self.email_value.grid(row=1, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.email_value = ctk.CTkLabel(self.details_frame, text=self.email_entry.get(), font=ctk.CTkFont(size=24))
+        self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
         self.email_entry.destroy()
 
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.location_entry.get())
-        self.location_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.location_entry.get(), font=ctk.CTkFont(size=24))
+        self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
         self.location_entry.destroy()
 
         self.save_button.destroy()
