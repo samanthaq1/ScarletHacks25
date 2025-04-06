@@ -54,19 +54,19 @@ class ProfilePage(ctk.CTkFrame):
         # Username
         username_label = ctk.CTkLabel(self.details_frame, text="Username:", font=label_font)
         username_label.grid(row=1, column=1, padx=(20, 10), pady=(30, 8), sticky="w")
-        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24))
+        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
 
         # Email
         email_label = ctk.CTkLabel(self.details_frame, text="Email:", font=label_font)
         email_label.grid(row=2, column=1, padx=(20, 10), pady=8, sticky="w")
-        self.email_value = ctk.CTkLabel(self.details_frame, text="user123@example.com", font=value_font)
+        self.email_value = ctk.CTkLabel(self.details_frame, text="user123@example.com", font=value_font, anchor="w", justify="left")
         self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
 
         # Location
         location_label = ctk.CTkLabel(self.details_frame, text="Location:", font=label_font)
         location_label.grid(row=3, column=1, padx=(20, 10), pady=8, sticky="w")
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=value_font)
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=value_font, anchor="w", justify="left")
         self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
 
         # Edit Button (initial)
