@@ -15,15 +15,22 @@ class BrowsePage(ctk.CTkFrame):
         super().__init__(parent)
 
         # Title
-        self.title_bar = ctk.CTkFrame(self, fg_color="transparent")  # or set a color
-        self.title_bar.pack(side="top", fill="x", padx=20, pady=(10, 10))
-        title_label = ctk.CTkLabel(
-            self.title_bar,
-            text="Browse for Foods in Stores",
-            font=("Segoe UI", 28, "bold"),
-            anchor="w"
-        )
-        title_label.pack(side="left")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_rowconfigure(1, weight=1)
+
+        # Title Label
+        label_font = ctk.CTkFont(family="Segoe UI", size=14)
+        header_font = ctk.CTkFont(family="Segoe UI", size=22, weight="bold")
+
+        # App Bar
+        self.app_bar = ctk.CTkFrame(self, corner_radius=0, fg_color="#3F7D58")
+        self.app_bar.grid(row=0, column=0, sticky="ew")
+        self.app_bar.grid_columnconfigure(0, weight=1)
+
+        title_label = ctk.CTkLabel(self.app_bar, text="Browse for Food in Stores", font=header_font, text_color="white")
+        title_label.grid(row=0, column=0, pady=20, padx=10, sticky="w")
+
 
         # Get full path to the image in the 'assets' folder and load into image to icon
         icon_path = os.path.dirname(os.path.realpath(__file__))
@@ -39,7 +46,8 @@ class BrowsePage(ctk.CTkFrame):
     def create_store_list(self):
         # Main frame to hold buttons and details side by side
         self.content_frame = ctk.CTkFrame(self)
-        self.content_frame.pack(padx=20, pady=10, fill="both", expand=True)
+        self.content_frame.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
+
 
         # Scrollable button list (on left)
         self.scroll_frame = ctk.CTkScrollableFrame(self.content_frame, width=250)
@@ -84,8 +92,6 @@ class BrowsePage(ctk.CTkFrame):
                 width=32,
                 height=32,
                 corner_radius=16,
-                fg_color="#73a291",
-                hover_color="#84b9a5",
                 command=lambda addr=location: self.open_store_directions(addr)
             )
             icon_button.pack(side="left", padx=(0, 8))
@@ -96,8 +102,6 @@ class BrowsePage(ctk.CTkFrame):
                 text=store,
                 width=200,
                 anchor="w",
-                fg_color="#8AB2A6",
-                hover_color="#719087",
                 command=lambda g=group, s=store, l=location: self.show_store_details(s, l, g)
             )
             store_button.pack(side="left", fill="x", expand=True)
@@ -109,7 +113,7 @@ class BrowsePage(ctk.CTkFrame):
             self.details_popup.destroy()
 
         # Create a new frame that acts as a popup
-        self.details_popup = ctk.CTkFrame(self)
+        self.details_popup = ctk.CTkFrame(self, fg_color="#3E3F5B")
         
         # Center the frame in the middle of the window
         self.details_popup.place(relx=0.5, rely=0.5, anchor="center", relwidth=0.6, relheight=0.6)
@@ -130,8 +134,6 @@ class BrowsePage(ctk.CTkFrame):
         close_button = ctk.CTkButton(
             self.details_popup,
             text="Close",
-            fg_color="#8AB2A6",
-            hover_color="#719087",
             command=self.close_popup  # Use close_popup to properly close
         )
         close_button.pack(pady=(0, 10))
@@ -168,7 +170,7 @@ class BrowsePage(ctk.CTkFrame):
     def create_search_bar(self):
         # Search bar
         self.search_entry = ctk.CTkEntry(self, placeholder_text="Search by food...", width=300)
-        self.search_entry.pack(pady=(10, 5), anchor="center")
+        self.search_entry.grid(row=1, column=0, pady=(10, 5), padx=10, sticky="n")
 
         # Search button
         search_button = ctk.CTkButton(self, 
@@ -176,7 +178,7 @@ class BrowsePage(ctk.CTkFrame):
             fg_color="#3E3F5B",
             hover_color="#686993", 
             command=self.perform_search)
-        search_button.pack(pady=(5, 10))
+        search_button.grid(row=2, column=0, pady=(5, 10), padx=10, sticky="n")
 
         # Bind Enter key for mobile users
         self.search_entry.bind("<Return>", lambda event: self.perform_search())
