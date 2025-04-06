@@ -9,7 +9,7 @@ from .__init__ import model
 
 
 # Hardcoded previous searches
-search_data = {"search_term": ["Milk", "Eggs", "Bananas", "Tomatoes"]}
+search_data = {"search_term": ["Milk", "Eggs", "Bananas", "Tomatoes", "Yogurt", "Milk", "Eggs"]}
 search_df = pd.DataFrame(search_data)
 
 # Recommendation logic
@@ -31,9 +31,9 @@ if not matching_items.empty:
                 for key, value in item.items():
                     if isinstance(value, np.str_):
                         item[key] = str(value)
-            recommendations = refined_recommendations[:3]
+            recommendations = refined_recommendations[:5]
     except (SyntaxError, NameError, TypeError):
         print("Gemini recommendation processing failed. Returning initial recommendations.")
-        recommendations = initial_recommendations[:3]
+        recommendations = initial_recommendations[:5]
 else:
   recommendations = []

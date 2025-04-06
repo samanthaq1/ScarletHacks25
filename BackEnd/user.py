@@ -3,7 +3,7 @@ class ProfileData:
     A class to store and manage profile data (username and location).
     """
 
-    def __init__(self, username="", location=""):
+    def __init__(self, username="John Doe", location="10 W 35th St"):
         """
         Initializes the ProfileData object with optional username and location.
         """

@@ -111,15 +111,15 @@ class ProfilePage(ctk.CTkFrame):
 
     def cancel_edit(self):
         # Restore original label values
-        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24))
+        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
         self.username_entry.destroy()
 
-        self.email_value = ctk.CTkLabel(self.details_frame, text=self.original_email, font=ctk.CTkFont(size=24))
+        self.email_value = ctk.CTkLabel(self.details_frame, text=self.original_email, font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
         self.email_entry.destroy()
 
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=ctk.CTkFont(size=24))
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
         self.location_entry.destroy()
 
@@ -132,15 +132,15 @@ class ProfilePage(ctk.CTkFrame):
         self.profile_data.set_username(self.username_entry.get())
         self.profile_data.set_location(self.location_entry.get())
 
-        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24))
+        self.username_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_username(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.username_value.grid(row=1, column=2, padx=(10, 20), pady=(30, 8), sticky="w")
         self.username_entry.destroy()
 
-        self.email_value = ctk.CTkLabel(self.details_frame, text=self.email_entry.get(), font=ctk.CTkFont(size=24))
+        self.email_value = ctk.CTkLabel(self.details_frame, text=self.email_entry.get(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.email_value.grid(row=2, column=2, padx=(10, 20), pady=8, sticky="w")
         self.email_entry.destroy()
 
-        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=ctk.CTkFont(size=24))
+        self.location_value = ctk.CTkLabel(self.details_frame, text=self.profile_data.get_location(), font=ctk.CTkFont(size=24), anchor="w", justify="left")
         self.location_value.grid(row=3, column=2, padx=(10, 20), pady=8, sticky="w")
         self.location_entry.destroy()
 
