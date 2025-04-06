@@ -1,5 +1,5 @@
 import requests
-maps_key = "MY_API_KEY"
+from __init__ import maps_key
 
 def searchArea(userAddress, radius):
   #address = "1600+Amphitheatre+Parkway,+Mountain+View,+CA"
