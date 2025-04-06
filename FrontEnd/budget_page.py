@@ -4,7 +4,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from BackEnd.budget import create_meal_plan
-# Hardcoded location
+
 
 
 class BudgetPage(ctk.CTkFrame):
@@ -16,7 +16,10 @@ class BudgetPage(ctk.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
 
         # Title Label
-        title_label = ctk.CTkLabel(self, text="Budget Meal Planner", font=ctk.CTkFont(size=24, weight="bold"))
+        label_font = ctk.CTkFont(family="Segoe UI", size=14)
+        header_font = ctk.CTkFont(family="Segoe UI", size=20, weight="bold")
+
+        title_label = ctk.CTkLabel(self, text="Budget Meal Planner", font=header_font)
         title_label.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="ew")
 
         # Input Frame
@@ -24,13 +27,13 @@ class BudgetPage(ctk.CTkFrame):
         input_frame.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
 
         # Budget input
-        budget_label = ctk.CTkLabel(input_frame, text="Budget ($):", font=ctk.CTkFont(size=14))
+        budget_label = ctk.CTkLabel(input_frame, text="Budget ($):", font=label_font)
         budget_label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
         self.budget_entry = ctk.CTkEntry(input_frame, width=250)
         self.budget_entry.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
 
         # Duration input
-        duration_label = ctk.CTkLabel(input_frame, text="Duration (days):", font=ctk.CTkFont(size=14))
+        duration_label = ctk.CTkLabel(input_frame, text="Duration (days):", font=label_font)
         duration_label.grid(row=1, column=0, padx=10, pady=5, sticky="w")
         self.duration_entry = ctk.CTkEntry(input_frame, width=250)
         self.duration_entry.grid(row=1, column=1, padx=10, pady=5, sticky="ew")
@@ -53,7 +56,7 @@ class BudgetPage(ctk.CTkFrame):
         self.scrollable_frame.place(x=10, y=30)
 
         # Label to show the meal plan text
-        self.meal_plan_label = ctk.CTkLabel(self.scrollable_frame, text="Meal Plan will appear here.", font=ctk.CTkFont(size=14))
+        self.meal_plan_label = ctk.CTkLabel(self.scrollable_frame, text="Meal Plan will appear here.", font=label_font)
         self.meal_plan_label.pack(pady=10)
 
     def generate_meal_plan(self):

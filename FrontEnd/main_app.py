@@ -4,7 +4,7 @@ from browse_page import BrowsePage
 from profile_page import ProfilePage
 from PIL import Image
 import os
-
+from budget_page import BudgetPage
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("green")
 
@@ -23,7 +23,7 @@ class App(ctk.CTk):
         self.pages = {
             "discover": DiscoverPage(self.page_container),
             "browse": BrowsePage(self.page_container),
-            # "budget": BudgetPage(self.page_container),
+            "budget": BudgetPage(self.page_container),
             "profile": ProfilePage(self.page_container),
         }
 
