@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from discover_page import DiscoverPage
 from browse_page import BrowsePage
+from profile_page import ProfilePage
 from PIL import Image
 import os
 
@@ -14,14 +15,16 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("SellBuy")
-        self.geometry("600x900")
+        self.geometry("600x700")
 
         self.page_container = ctk.CTkFrame(self)
         self.page_container.pack(fill="both", expand=True)
 
         self.pages = {
             "discover": DiscoverPage(self.page_container),
-            "browse": BrowsePage(self.page_container)
+            "browse": BrowsePage(self.page_container),
+            # "budget": BudgetPage(self.page_container),
+            "profile": ProfilePage(self.page_container),
         }
 
         for page in self.pages.values():
@@ -30,11 +33,13 @@ class App(ctk.CTk):
         # Load icons (always gray)
         self.icons = {
             "discover": ctk.CTkImage(Image.open(file_path + "/assets/discover.png"), size=(24, 24)),
-            "browse": ctk.CTkImage(Image.open(file_path + "/assets/browse.png"), size=(24, 24))
+            "browse": ctk.CTkImage(Image.open(file_path + "/assets/browse.png"), size=(24, 24)),
+            "budget": ctk.CTkImage(Image.open(file_path + "/assets/list.png"), size=(24, 24)),
+            "profile": ctk.CTkImage(Image.open(file_path + "/assets/user.png"), size=(24, 24)),
         }
 
         # Bottom nav bar
-        nav_bar = ctk.CTkFrame(self, height=60)
+        nav_bar = ctk.CTkFrame(self, height=50)
         nav_bar.pack(side="bottom", fill="x")
 
         self.nav_buttons = {}
@@ -42,9 +47,13 @@ class App(ctk.CTk):
         # Create nav buttons
         self.nav_buttons["discover"] = self.create_nav_button(nav_bar, "discover", lambda: self.show_page("discover"))
         self.nav_buttons["browse"] = self.create_nav_button(nav_bar, "browse", lambda: self.show_page("browse"))
+        self.nav_buttons["budget"] = self.create_nav_button(nav_bar, "budget", lambda: self.show_page("budget"))
+        self.nav_buttons["profile"] = self.create_nav_button(nav_bar, "profile", lambda: self.show_page("profile"))
 
         self.nav_buttons["discover"].pack(side="left", expand=True, fill="both")
         self.nav_buttons["browse"].pack(side="left", expand=True, fill="both")
+        self.nav_buttons["budget"].pack(side="left", expand=True, fill="both")
+        self.nav_buttons["profile"].pack(side="left", expand=True, fill="both")
 
         self.active_page = None
         self.show_page("discover")
