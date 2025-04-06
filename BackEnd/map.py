@@ -1,5 +1,5 @@
 import requests
-maps_key = "Your_map_key"
+maps_key = "MY_API_KEY"
 
 def searchArea(userAddress, radius):
   #address = "1600+Amphitheatre+Parkway,+Mountain+View,+CA"
@@ -39,5 +39,35 @@ def searchArea(userAddress, radius):
           print(f"Name: {name}, Address: {address}")
   else:
       print("Error:", data['status'])
-      
-searchArea("1600 Amphitheatre Parkway, Mountain View, CA", 1)
+
+
+
+def distance(userLocation, destination):
+        # Prepare the request URL
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={userLocation}&destinations={destination}&units=imperial&key={maps_key}"
+
+    # Send the GET request
+    response = requests.get(url)
+
+    # Parse the response
+    data = response.json()
+
+    # Extract distance and duration
+    if data['status'] == 'OK':
+        distance = data['rows'][0]['elements'][0]['distance']['text']
+        duration = data['rows'][0]['elements'][0]['duration']['text']
+        print(f"Distance: {distance}")
+        print(f"Duration: {duration}")
+    else:
+        print(f"Error: {data['status']}")
+
+
+def get_link(userLocation, destination):
+    # URL encode the origin and destination
+    userLocation_encoded = userLocation.replace(" ", "+")
+    destination_encoded = destination.replace(" ", "+")
+    
+    # Generate the Google Maps directions link
+    route_link = f"https://www.google.com/maps/dir/?api=1&origin={userLocation_encoded}&destination={destination_encoded}"
+    
+    print("Google Maps Route Link:", route_link)
