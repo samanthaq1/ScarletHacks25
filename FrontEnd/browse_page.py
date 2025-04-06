@@ -13,8 +13,19 @@ user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kac
 class BrowsePage(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        label = ctk.CTkLabel(self, text="Browse Page", font=("Segoe UI", 20))
-        label.pack(pady=(20, 10))
+
+        # Title
+        self.title_bar = ctk.CTkFrame(self, fg_color="transparent")  # or set a color
+        self.title_bar.pack(side="top", fill="x", padx=20, pady=(10, 10))
+        title_label = ctk.CTkLabel(
+            self.title_bar,
+            text="Browse for Foods in Stores",
+            font=("Segoe UI", 28, "bold"),
+            anchor="w"
+        )
+        title_label.pack(side="left")
+
+        # 
 
         # Get full path to the image in the 'assets' folder and load into image to icon
         icon_path = os.path.dirname(os.path.realpath(__file__))
@@ -44,7 +55,7 @@ class BrowsePage(ctk.CTkFrame):
             self.details_frame, 
             text="", 
             justify="left", 
-            anchor="nw", 
+            anchor="nw",
             wraplength=300
             )
         self.details_label.pack(pady=(0, 10), padx=10, fill="both", expand=True)
@@ -73,6 +84,8 @@ class BrowsePage(ctk.CTkFrame):
                 text="",
                 width=32,
                 height=32,
+                corner_radius=16,
+                color="#8AB2A6",
                 command=lambda addr=location: self.open_store_directions(addr)
             )
             icon_button.pack(side="left", padx=(0, 8))
@@ -83,6 +96,8 @@ class BrowsePage(ctk.CTkFrame):
                 text=store,
                 width=200,
                 anchor="w",
+                corner_radius=16,
+                color="#8AB2A6",
                 command=lambda g=group, s=store, l=location: self.show_store_details(s, l, g)
             )
             store_button.pack(side="left", fill="x", expand=True)
