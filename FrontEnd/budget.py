@@ -1,11 +1,11 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
+import os
 from sample_data import data  # Import the data from sample_data.py
 
-
 # Configure your Gemini API key
-genai.configure(api_key="MY_API_KEY")
+genai.configure(api_key="AIzaSyAjAILDTv3M41p64ywtAoX3wCYBAzQvEIc")
 
 def create_meal_plan(location, budget, duration):
 
@@ -39,9 +39,9 @@ def create_meal_plan(location, budget, duration):
     return response.text
 
 # Example usage
-#location = "Chicago, IL"
-#budget = 50.00
-#duration = 3
+location = "Chicago, IL"
+budget = 50.00
+duration = 3
 
-#meal_plan = create_meal_plan(location, budget, duration)
-#print(meal_plan)
+meal_plan = create_meal_plan(location, budget, duration)
+print(meal_plan)

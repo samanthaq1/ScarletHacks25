@@ -12,8 +12,8 @@ class ProfilePage(ctk.CTkFrame):
         self.grid_rowconfigure(1, weight=1)  # Allow details to expand
 
         # === Fonts ===
-        header_font = ctk.CTkFont(size=26, weight="bold")
-        label_font = ctk.CTkFont(size=14, weight="bold")
+        label_font = ctk.CTkFont(family="Segoe UI", size=14, weight="bold")
+        header_font = ctk.CTkFont(family="Segoe UI", size=20, weight="bold")
         value_font = ctk.CTkFont(size=14)
 
         # === Header Frame ===

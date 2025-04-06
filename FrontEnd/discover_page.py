@@ -13,7 +13,7 @@ class DiscoverPage(ctk.CTkFrame):
         self.app_bar.grid(row=0, column=0, sticky="ew")
         self.app_bar.grid_columnconfigure(0, weight=1)
 
-        self.title_label = ctk.CTkLabel(self.app_bar, text="Discover Stores Near You", font=("Segoe UI", 20, "bold"), anchor="w")
+        self.title_label = ctk.CTkLabel(self.app_bar, text="Dicovser Stores Near You", font=("Segoe UI", 20, "bold"), anchor="w")
         self.title_label.grid(row=0, column=0, pady=20, padx=10, sticky="w")
 
         # Location entry included in App Bar
