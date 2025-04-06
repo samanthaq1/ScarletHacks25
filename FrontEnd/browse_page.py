@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from BackEnd.map import get_link
 import webbrowser
 import customtkinter as ctk
-from sample_data import grocery_df
+from BackEnd.sample_data import grocery_df
 from PIL import Image
 
 

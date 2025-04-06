@@ -1,8 +1,12 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import pandas as pd
 from datetime import datetime, timedelta
 import google.generativeai as genai
 import os
-from sample_data import data  # Import the data from sample_data.py
+from BackEnd.sample_data import data  # Import the data from sample_data.py
 
 # Configure your Gemini API key
 genai.configure(api_key="")
