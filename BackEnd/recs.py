@@ -5,10 +5,8 @@ import pandas as pd
 from .sample_data import grocery_df
 import numpy as np
 from google import generativeai as genai
+from __init__ import model
 
-genai.configure(api_key="")
-
-model = genai.GenerativeModel('gemini-1.5-flash-002')
 
 # Hardcoded previous searches
 search_data = {"search_term": ["Milk", "Chicken", "Bananas"]}
