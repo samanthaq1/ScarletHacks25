@@ -45,14 +45,6 @@ class BrowsePage(ctk.CTkFrame):
             )
         self.details_label.pack(pady=(0, 10), padx=10, fill="both", expand=True)
 
-        # Makes store details closable
-        self.close_button = ctk.CTkButton(
-            self.details_frame, 
-            text="Close", 
-            command=self.clear_details
-            )
-        self.close_button.pack(pady=(0, 10))
-
         # Store the full sorted DataFrame
         self.data = grocery_df
 
@@ -94,7 +86,7 @@ class BrowsePage(ctk.CTkFrame):
 
     def show_store_details(self, store, location, store_df):
         # Close the existing frame if it exists
-        if hasattr(self, 'details_popup') and self.details_popup.winfo_ismapped():
+        if hasattr(self, 'details_popup') and self.details_popup.winfo_exists():
             self.details_popup.destroy()
 
         # Create a new frame that acts as a popup
@@ -102,7 +94,6 @@ class BrowsePage(ctk.CTkFrame):
         
         # Center the frame in the middle of the window
         self.details_popup.place(relx=0.5, rely=0.5, anchor="center", relwidth=0.6, relheight=0.6)
-
 
         # Details label inside the popup
         label = ctk.CTkLabel(
@@ -118,7 +109,7 @@ class BrowsePage(ctk.CTkFrame):
         close_button = ctk.CTkButton(
             self.details_popup,
             text="Close",
-            command=self.details_popup.destroy
+            command=self.close_popup  # Use close_popup to properly close
         )
         close_button.pack(pady=(0, 10))
 
@@ -133,6 +124,12 @@ class BrowsePage(ctk.CTkFrame):
 
         # Update label with the store details
         label.configure(text=text)
+
+    # Resolves window error 
+    def close_popup(self):
+        """Method to close the popup properly."""
+        if hasattr(self, 'details_popup') and self.details_popup.winfo_exists():
+            self.details_popup.destroy()
     
     def clear_details(self):
         self.details_label.configure(text="")
