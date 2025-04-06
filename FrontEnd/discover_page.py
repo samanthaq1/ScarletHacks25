@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from sample_data import grocery_df
-from maps import searchArea
+from . import grocery_df
+from . import searchArea
 
 class DiscoverPage(ctk.CTkFrame):
     def __init__(self, parent):
@@ -17,29 +17,29 @@ class DiscoverPage(ctk.CTkFrame):
         self.title_label.grid(row=0, column=0, pady=20, padx=10, sticky="w")
 
         # Location entry included in App Bar
-        self.location_entry = ctk.CTkEntry(self.app_bar, placeholder_text="Enter your location")
-        self.location_entry.grid(row=0, column=1, pady=20, padx=10, sticky="e")
+        # self.location_entry = ctk.CTkEntry(self.app_bar, placeholder_text="Enter your location")
+        # self.location_entry.grid(row=0, column=1, pady=20, padx=10, sticky="e")
 
-        # Radius dropdown
-        self.radius_var = ctk.StringVar(value="5")
-        self.radius_label = ctk.CTkLabel(self.app_bar, text="within", font=("Segoe UI", 10), anchor="e")
-        self.radius_label.grid(row=0, column=2, pady=20, padx=5, sticky="e")
-        self.radius_menu = ctk.CTkOptionMenu(
-            self.app_bar,
-            values=["5 miles", "10", "15", "20", "25"],
-            variable=self.radius_var,
-            command=self.update_store_list
-        )
-        self.radius_menu.grid(row=0, column=3, pady=20, padx=10, sticky="e")
+        # # Radius dropdown
+        # self.radius_var = ctk.StringVar(value="5")
+        # self.radius_label = ctk.CTkLabel(self.app_bar, text="within", font=("Segoe UI", 10), anchor="e")
+        # self.radius_label.grid(row=0, column=2, pady=20, padx=5, sticky="e")
+        # self.radius_menu = ctk.CTkOptionMenu(
+        #     self.app_bar,
+        #     values=["5 mi", "10 mi", "15 mi", "20 mi", "25 mi"],
+        #     variable=self.radius_var,
+        #     command=self.update_store_list
+        # )
+        # self.radius_menu.grid(row=0, column=3, pady=20, padx=10, sticky="e")
 
-        self.trending_label = ctk.CTkLabel(self, text="Trending Stores Around Your Area", font=("Segoe UI", 16, "bold"))
+        self.trending_label = ctk.CTkLabel(self, text="Trending Stores", font=("Segoe UI", 16, "bold"))
         self.trending_label.grid(row=1, column=0, pady=(10, 5))
 
         trending_scroll_frame = ctk.CTkScrollableFrame(self, orientation="horizontal")
         trending_scroll_frame.grid(row=2, column=0, padx=10, pady=(0, 20), sticky="ew")
         self.trending_frame = trending_scroll_frame
 
-        self.store_label = ctk.CTkLabel(self, text="Recommendations based on your history", font=("Segoe UI", 16, "bold"))
+        self.store_label = ctk.CTkLabel(self, text="Recommendations Based On Your history", font=("Segoe UI", 16, "bold"))
         self.store_label.grid(row=3, column=0, pady=(10, 5))
 
         store_scroll_frame = ctk.CTkScrollableFrame(self, orientation="horizontal")
