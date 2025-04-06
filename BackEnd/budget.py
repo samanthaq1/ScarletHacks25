@@ -40,4 +40,3 @@ def create_meal_plan(budget, duration):
     model = genai.GenerativeModel('gemini-2.0-flash')
     response = model.generate_content(prompt)
     return response.text
-
