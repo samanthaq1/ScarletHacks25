@@ -54,6 +54,7 @@ class BrowsePage(ctk.CTkFrame):
             text="", 
             justify="left", 
             anchor="nw",
+            font=("Segoe UI", 16),
             wraplength=300
             )
         self.details_label.pack(pady=(0, 10), padx=10, fill="both", expand=True)
