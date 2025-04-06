@@ -6,6 +6,9 @@ import customtkinter as ctk
 from BackEnd.recs import recommendations
 from BackEnd.trending import get_trending_items
 from BackEnd.sample_data import grocery_df 
+from BackEnd.map import distance
+
+user_location = "3101 S Wabash Ave, Chicago, IL 60616"  # Hardcoded data for kacek as user location  
 
 class DiscoverPage(ctk.CTkFrame):
     def __init__(self, parent):
@@ -55,7 +58,10 @@ class DiscoverPage(ctk.CTkFrame):
             store_button = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"], r=3: self.show_store_items(s, r))
             store_button.pack(pady=(5, 0), fill="x")
 
-            label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 12), text_color="gray")
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
+            label = ctk.CTkLabel(card, text=location_text, wraplength=140, font=("Segoe UI", 12), text_color="gray")
             label.pack(pady=(0, 10))
 
     def populate_rec_stores(self):
@@ -76,7 +82,10 @@ class DiscoverPage(ctk.CTkFrame):
             btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"], r=6: self.show_store_items(s, r))
             btn.pack(pady=(5, 0), fill="x")
 
-            label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 12), text_color="gray")
+            dist = distance(user_location, row["Location"])
+            location_text = f"{row['Location']} ({dist})"
+
+            label = ctk.CTkLabel(card, text=location_text, wraplength=140, font=("Segoe UI", 12), text_color="gray")
             label.pack(pady=(0, 10))
     
     def show_store_items(self, store_name, row_num):
