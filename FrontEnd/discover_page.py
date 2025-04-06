@@ -83,7 +83,7 @@ class DiscoverPage(ctk.CTkFrame):
             card = ctk.CTkFrame(self.store_frame, width=150)
             card.pack(side="left", padx=10, pady=10)
 
-            btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"]: self.show_store_items(s))
+            btn = ctk.CTkButton(card, text=row["Store"], command=lambda s=row["Store"]: self.show_store_dialog(s))
             btn.pack(pady=(5, 0), fill="x")
 
             label = ctk.CTkLabel(card, text=row["Location"], wraplength=140, font=("Segoe UI", 10), text_color="gray")
