@@ -93,9 +93,37 @@ class BrowsePage(ctk.CTkFrame):
 
 
     def show_store_details(self, store, location, store_df):
-        # Filter for available items only
-        available = store_df[store_df["Availability"] == "Available"]
+        # Close the existing frame if it exists
+        if hasattr(self, 'details_popup') and self.details_popup.winfo_ismapped():
+            self.details_popup.destroy()
 
+        # Create a new frame that acts as a popup
+        self.details_popup = ctk.CTkFrame(self)
+        
+        # Center the frame in the middle of the window
+        self.details_popup.place(relx=0.5, rely=0.5, anchor="center", relwidth=0.6, relheight=0.6)
+
+
+        # Details label inside the popup
+        label = ctk.CTkLabel(
+            self.details_popup,
+            text="",
+            justify="left",
+            anchor="nw",
+            wraplength=320
+        )
+        label.pack(pady=(10, 10), padx=10, fill="both", expand=True)
+
+        # Close button inside the popup
+        close_button = ctk.CTkButton(
+            self.details_popup,
+            text="Close",
+            command=self.details_popup.destroy
+        )
+        close_button.pack(pady=(0, 10))
+
+        # Prepare the details text
+        available = store_df[store_df["Availability"] == "Available"]
         if available.empty:
             text = f"🏬 {store}\n📍 {location}\n\n⚠️ No available food items."
         else:
@@ -103,7 +131,8 @@ class BrowsePage(ctk.CTkFrame):
             for _, row in available.iterrows():
                 text += f"• {row['Food']} - ${row['Final Price']:.2f} (exp: {row['Expiration Date']})\n"
 
-        self.details_label.configure(text=text)
+        # Update label with the store details
+        label.configure(text=text)
     
     def clear_details(self):
         self.details_label.configure(text="")
