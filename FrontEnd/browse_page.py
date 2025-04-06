@@ -85,7 +85,8 @@ class BrowsePage(ctk.CTkFrame):
                 width=32,
                 height=32,
                 corner_radius=16,
-                color="#8AB2A6",
+                fg_color="#8AB2A6",
+                hover_color="#719087",
                 command=lambda addr=location: self.open_store_directions(addr)
             )
             icon_button.pack(side="left", padx=(0, 8))
@@ -96,8 +97,8 @@ class BrowsePage(ctk.CTkFrame):
                 text=store,
                 width=200,
                 anchor="w",
-                corner_radius=16,
-                color="#8AB2A6",
+                fg_color="#8AB2A6",
+                hover_color="#719087",
                 command=lambda g=group, s=store, l=location: self.show_store_details(s, l, g)
             )
             store_button.pack(side="left", fill="x", expand=True)
@@ -128,6 +129,7 @@ class BrowsePage(ctk.CTkFrame):
         close_button = ctk.CTkButton(
             self.details_popup,
             text="Close",
+            color="#8AB2A6",
             command=self.close_popup  # Use close_popup to properly close
         )
         close_button.pack(pady=(0, 10))
