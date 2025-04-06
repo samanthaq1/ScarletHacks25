@@ -20,10 +20,6 @@ class BrowsePage(ctk.CTkFrame):
         icon_path = os.path.dirname(os.path.realpath(__file__))
         self.store_icon = ctk.CTkImage(light_image=Image.open(icon_path + "/assets/destination.png"), size=(24, 24))
 
-        # Create frame for dropmenu
-        self.top_frame = ctk.CTkFrame(self)
-        self.top_frame.place(relx=1, rely=0.126, anchor="ne")
-
         # Intialize complex page elements
         self.create_search_bar()
         self.create_dropmenu_radius()
@@ -174,15 +170,6 @@ class BrowsePage(ctk.CTkFrame):
         ]
 
         self.show_store_buttons(filtered)
-    
-    def create_dropmenu_radius(self):
-        self.radius_var = ctk.StringVar(value="5")
-        self.radius_menu = ctk.CTkOptionMenu(
-            self.top_frame,
-            values=["5", "10", "15", "20", "25"],
-            variable=self.radius_var,
-            )
-        self.radius_menu.pack(side="left")
 
 if __name__ == "__main__":
     app = ctk.CTk()
